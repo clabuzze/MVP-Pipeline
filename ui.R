@@ -93,7 +93,7 @@ body <- dashboardBody(
                      textInput("pValue", label = "2. Input p value for differential expression", value = 0.05, placeholder = 0.05)
               ),
               column(width = 6,
-                     radioButtons("SelFil", label = "3. Select filtering method", choices = list("MVP", "None"), inline = TRUE, selected = "MVP"),
+                     radioButtons("SelFilValidate", label = "3. Select filtering method", choices = list("MVP", "None"), inline = TRUE, selected = "MVP"),
                      uiOutput("validation")
               )
             ),

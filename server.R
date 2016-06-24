@@ -119,8 +119,13 @@ function(input, output) {
         data <- (c(mean(curve$x), var(curve$x)))
       }))
       
-      test_matrix <- t(test_matrix[names(sort(abs(returned[1,] - returned2[1,])/(returned[2,] + returned2[2,]),decreasing = T)[1:min(nrow(test_matrix),50)]),])
-      train_matrix <- t(train_matrix[names(sort(abs(returned[1,] - returned2[1,])/(returned[2,] + returned2[2,]),decreasing = T)[1:min(nrow(train_matrix),50)]),])      
+      if(MVPq==TRUE){
+        test_matrix <- t(test_matrix[names(sort(abs(returned[1,] - returned2[1,])/(returned[2,] + returned2[2,]),decreasing = T)[1:min(nrow(test_matrix),50)]),])
+        train_matrix <- t(train_matrix[names(sort(abs(returned[1,] - returned2[1,])/(returned[2,] + returned2[2,]),decreasing = T)[1:min(nrow(train_matrix),50)]),])
+      } else {
+        test_matrix <- t(test_matrix[names(sort(abs(returned[1,] - returned2[1,])/(returned[2,] + returned2[2,]),decreasing = T)),])
+        train_matrix <- t(train_matrix[names(sort(abs(returned[1,] - returned2[1,])/(returned[2,] + returned2[2,]),decreasing = T)),])
+      }
 
       test_matrix <- test_matrix[,apply(train_matrix,2,var)>0.1e-50]
       train_matrix <- train_matrix[,apply(train_matrix,2,var)>0.1e-50]
@@ -199,7 +204,7 @@ function(input, output) {
     quant = 0
     
     MVPq <- FALSE
-    if(input$SelFil == "MVP"){
+    if(input$SelFilValidate == "MVP"){
       MVPq <- TRUE
     }
     
@@ -271,9 +276,14 @@ function(input, output) {
             data <- (c(mean(curve$x), var(curve$x)))
           }))
           
-      test_matrix <- t(test_matrix[names(sort(abs(returned[1,] - returned2[1,])/(returned[2,] + returned2[2,]),decreasing = T)[1:min(nrow(test_matrix),50)]),])
-      train_matrix <- t(train_matrix[names(sort(abs(returned[1,] - returned2[1,])/(returned[2,] + returned2[2,]),decreasing = T)[1:min(nrow(train_matrix),50)]),])
-          
+      if(MVPq==TRUE){
+        test_matrix <- t(test_matrix[names(sort(abs(returned[1,] - returned2[1,])/(returned[2,] + returned2[2,]),decreasing = T)[1:min(nrow(test_matrix),50)]),])
+        train_matrix <- t(train_matrix[names(sort(abs(returned[1,] - returned2[1,])/(returned[2,] + returned2[2,]),decreasing = T)[1:min(nrow(train_matrix),50)]),])
+      } else {
+        test_matrix <- t(test_matrix[names(sort(abs(returned[1,] - returned2[1,])/(returned[2,] + returned2[2,]),decreasing = T)),])
+        train_matrix <- t(train_matrix[names(sort(abs(returned[1,] - returned2[1,])/(returned[2,] + returned2[2,]),decreasing = T)),])
+      }         
+
           test_matrix <- test_matrix[,apply(train_matrix,2,var)>0.1e-50]
           train_matrix <- train_matrix[,apply(train_matrix,2,var)>0.1e-50]
           
