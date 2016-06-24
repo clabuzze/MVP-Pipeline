@@ -119,9 +119,9 @@ function(input, output) {
         data <- (c(mean(curve$x), var(curve$x)))
       }))
       
-      test_matrix <- t(test_matrix[abs(returned[1,] - returned2[1,])/(returned[2,] + returned2[2,])>quantile(abs(returned[1,] - returned2[1,])/(returned[2,] + returned2[2,]),quant),])
-      train_matrix <- t(train_matrix[abs(returned[1,] - returned2[1,])/(returned[2,] + returned2[2,])>quantile(abs(returned[1,] - returned2[1,])/(returned[2,] + returned2[2,]),quant),]) 
-      
+      test_matrix <- t(test_matrix[names(sort(abs(returned[1,] - returned2[1,])/(returned[2,] + returned2[2,]),decreasing = T)[1:min(nrow(test_matrix),50)]),])
+      train_matrix <- t(train_matrix[names(sort(abs(returned[1,] - returned2[1,])/(returned[2,] + returned2[2,]),decreasing = T)[1:min(nrow(train_matrix),50)]),])      
+
       test_matrix <- test_matrix[,apply(train_matrix,2,var)>0.1e-50]
       train_matrix <- train_matrix[,apply(train_matrix,2,var)>0.1e-50]
       test_matrix <- t(data.matrix(test_matrix))
@@ -271,8 +271,8 @@ function(input, output) {
             data <- (c(mean(curve$x), var(curve$x)))
           }))
           
-          test_matrix <- t(test_matrix[abs(returned[1,] - returned2[1,])/(returned[2,] + returned2[2,])>quantile(abs(returned[1,] - returned2[1,])/(returned[2,] + returned2[2,]),quant),])
-          train_matrix <- t(train_matrix[abs(returned[1,] - returned2[1,])/(returned[2,] + returned2[2,])>quantile(abs(returned[1,] - returned2[1,])/(returned[2,] + returned2[2,]),quant),]) 
+      test_matrix <- t(test_matrix[names(sort(abs(returned[1,] - returned2[1,])/(returned[2,] + returned2[2,]),decreasing = T)[1:min(nrow(test_matrix),50)]),])
+      train_matrix <- t(train_matrix[names(sort(abs(returned[1,] - returned2[1,])/(returned[2,] + returned2[2,]),decreasing = T)[1:min(nrow(train_matrix),50)]),])
           
           test_matrix <- test_matrix[,apply(train_matrix,2,var)>0.1e-50]
           train_matrix <- train_matrix[,apply(train_matrix,2,var)>0.1e-50]
